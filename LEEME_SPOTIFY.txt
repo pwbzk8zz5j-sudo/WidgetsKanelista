@@ -1,0 +1,33 @@
+KANELISTA — SPOTIFY NOW PLAYING (FASE 1)
+
+ARCHIVOS
+- spotify.html
+- spotify.css
+- spotify.js
+- callback.html
+
+SUBIR A GITHUB
+1. Sube los cuatro archivos a la raíz del repositorio WidgetsKanelista.
+2. Haz commit.
+3. Espera a que GitHub Pages publique los cambios.
+
+PRIMERA CONEXIÓN
+1. Abre directamente:
+   https://pwbzk8zz5j-sudo.github.io/WidgetsKanelista/spotify.html
+2. Pulsa "Conectar Spotify".
+3. Autoriza los permisos.
+4. Spotify regresará a callback.html y luego al widget.
+5. Inicia una canción en Spotify y pulsa "Actualizar" si aún no aparece.
+
+EN NOTION
+Usa /embed y pega:
+https://pwbzk8zz5j-sudo.github.io/WidgetsKanelista/spotify.html
+
+IMPORTANTE
+- En Spotify Developers, la Redirect URI debe ser EXACTAMENTE:
+  https://pwbzk8zz5j-sudo.github.io/WidgetsKanelista/callback.html
+- Debe estar marcada Web API.
+- No subas ni compartas el Client Secret.
+- La sesión se guarda localmente en el navegador.
+- Si Notion no ve la sesión iniciada en Safari/Chrome, abre primero el widget directamente
+  en ese mismo navegador y autorízalo allí.

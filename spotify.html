@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Kanelista — Now Playing</title>
+  <link rel="stylesheet" href="spotify.css">
+</head>
+<body>
+  <main class="player" id="player">
+    <div class="backdrop" id="backdrop"></div>
+    <div class="noise"></div>
+
+    <section class="connect-view" id="connectView">
+      <div class="spotify-mark" aria-hidden="true">
+        <span>♫</span>
+      </div>
+      <p class="eyebrow">KANELISTA AMBIENT</p>
+      <h1>Tu música, al final del recorrido.</h1>
+      <p class="description">
+        Conecta Spotify para mostrar lo que estás escuchando en este momento.
+      </p>
+      <button class="primary" id="connectButton" type="button">
+        Conectar Spotify
+      </button>
+      <p class="privacy">Solo lee tu reproducción actual. No controla tu cuenta.</p>
+    </section>
+
+    <section class="music-view hidden" id="musicView">
+      <div class="visual">
+        <div class="halo"></div>
+        <div class="vinyl" id="vinyl">
+          <div class="vinyl-rings"></div>
+          <img id="albumArt" alt="Portada del álbum">
+          <span class="vinyl-hole"></span>
+        </div>
+      </div>
+
+      <div class="details">
+        <div class="topline">
+          <div>
+            <p class="eyebrow" id="statusLabel">NOW PLAYING</p>
+            <p class="device" id="deviceLabel">Spotify</p>
+          </div>
+
+          <div class="equalizer" id="equalizer" aria-label="Reproduciendo">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="track-copy">
+          <h1 id="trackName">Canción</h1>
+          <p id="artistName">Artista</p>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="times">
+            <span id="elapsed">0:00</span>
+            <span id="duration">0:00</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="primary compact" id="spotifyLink" href="https://open.spotify.com/" target="_blank" rel="noopener">
+            Abrir en Spotify ↗
+          </a>
+          <button class="ghost" id="refreshButton" type="button">Actualizar</button>
+          <button class="ghost danger" id="disconnectButton" type="button">Desconectar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="idle-view hidden" id="idleView">
+      <div class="idle-orbit">
+        <span class="idle-star">✦</span>
+      </div>
+      <p class="eyebrow">SPOTIFY EN PAUSA</p>
+      <h1>El silencio también tiene ritmo.</h1>
+      <p id="idleText">Pon una canción y aparecerá aquí.</p>
+      <div class="actions centered">
+        <button class="primary compact" id="idleRefreshButton" type="button">Buscar música</button>
+        <button class="ghost danger" id="idleDisconnectButton" type="button">Desconectar</button>
+      </div>
+    </section>
+
+    <section class="error-view hidden" id="errorView">
+      <p class="eyebrow">ALGO SE ENREDÓ</p>
+      <h1 id="errorTitle">No pudimos consultar Spotify.</h1>
+      <p id="errorMessage">Vuelve a intentarlo.</p>
+      <div class="actions centered">
+        <button class="primary compact" id="retryButton" type="button">Reintentar</button>
+        <button class="ghost danger" id="errorDisconnectButton" type="button">Reconectar</button>
+      </div>
+    </section>
+
+    <div class="loading hidden" id="loading" aria-label="Cargando">
+      <span></span><span></span><span></span>
+    </div>
+  </main>
+
+  <script src="spotify.js"></script>
+</body>
+</html>
