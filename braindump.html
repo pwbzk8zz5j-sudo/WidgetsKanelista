@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="transparent" />
+
+  <title>Kanelista · Brain Dump Fidget</title>
+
+  <link rel="stylesheet" href="braindump.css?v=20260718-3" />
+  <script src="braindump.js?v=20260718-3" defer></script>
+</head>
+
+<body>
+  <main class="widget-shell">
+    <article class="fidget-card" id="fidgetCard" aria-label="Widget decorativo para pensar">
+      <span class="ambient ambient-one" aria-hidden="true"></span>
+      <span class="ambient ambient-two" aria-hidden="true"></span>
+
+      <header class="widget-header">
+        <div>
+          <p class="eyebrow">BRAIN DUMP</p>
+          <h1>Mueve tus ideas.</h1>
+        </div>
+
+        <div class="header-actions">
+          <button class="pause-button" id="pauseButton" type="button">
+            Pausar
+          </button>
+
+          <button class="reset-button" id="resetButton" type="button">
+            Reiniciar
+          </button>
+        </div>
+      </header>
+
+      <section class="playground" id="playground" aria-label="Zona interactiva">
+        <div class="orbit orbit-one" aria-hidden="true"></div>
+        <div class="orbit orbit-two" aria-hidden="true"></div>
+
+        <button class="thought thought-a" type="button" data-symbol="✦" aria-label="Idea">
+          <span>✦</span>
+        </button>
+
+        <button class="thought thought-b" type="button" data-symbol="○" aria-label="Pensamiento">
+          <span>○</span>
+        </button>
+
+        <button class="thought thought-c" type="button" data-symbol="?" aria-label="Duda">
+          <span>?</span>
+        </button>
+
+        <button class="thought thought-d" type="button" data-symbol="↗" aria-label="Pendiente">
+          <span>↗</span>
+        </button>
+
+        <button class="thought thought-e" type="button" data-symbol="♡" aria-label="Algo personal">
+          <span>♡</span>
+        </button>
+
+        <button class="thought thought-f" type="button" data-symbol="…" aria-label="Idea suelta">
+          <span>…</span>
+        </button>
+
+        <p class="hint" id="hint">Se mueven solitas. Atrápalas y arrástralas.</p>
+      </section>
+    </article>
+  </main>
+</body>
+</html>
