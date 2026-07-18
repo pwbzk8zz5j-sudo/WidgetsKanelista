@@ -3,22 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="transparent" />
   <title>Kanelista — Inicio</title>
-  <link rel="stylesheet" href="inicio.css" />
+  <link rel="stylesheet" href="inicio.css?v=20260717-2" />
+  <script src="inicio.js?v=20260717-2" defer></script>
 </head>
 <body>
-  <main class="widget" aria-live="polite">
-    <span class="glow one"></span><span class="glow two"></span>
-    <span class="spark s1"></span><span class="spark small s2"></span><span class="spark s3"></span><span class="spark small s4"></span><span class="spark small s5"></span>
-    <div class="content">
-      <section>
-        <h1 class="greeting"><span id="greeting">Buenos días</span>, <span class="name">Kanelista.</span></h1>
-        <div class="time-row"><div id="clock" class="clock">08:46</div><div id="date" class="date">Viernes, 17 de julio</div></div>
-      </section>
-      <section class="message-wrap"><p id="message" class="message">Hoy también cuenta.</p></section>
+  <main class="start-widget" id="startWidget" data-period="night" aria-live="polite">
+    <div class="glass-shine" aria-hidden="true"></div>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
+
+    <div class="art-layer" aria-hidden="true">
+      <svg class="dragon-art" viewBox="0 0 700 330" role="img">
+        <defs>
+          <linearGradient id="dragonStroke" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#bff4ff" />
+            <stop offset="0.52" stop-color="#55d6ff" />
+            <stop offset="1" stop-color="#7186ff" />
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#dragonStroke)" stroke-linecap="round" stroke-linejoin="round">
+          <path class="dragon-main" d="M640 75c-54-35-124-25-156 16-31 39 4 84 48 71 47-14 36-82-8-92-61-14-104 29-119 78-18 61-75 105-142 95-50-8-92-46-85-88 6-36 45-55 79-44 40 14 51 63 21 89-34 29-89 13-110-21-16-26-15-60 4-83"/>
+          <path d="M168 96c-17-4-34-14-45-29m54 23c-1-19-8-36-21-50m44 66c18-16 39-27 62-31m-53 47c-8-20-6-42 4-61"/>
+          <path d="M478 91c18-13 35-31 47-51m-29 43c22-2 45 3 63 15m-40 64c17 13 38 21 60 23m-69-8c4 19 15 37 31 50"/>
+          <path d="M616 63c15-17 24-35 28-55m-11 62c18-8 37-9 55-4m-38 22c19 4 34 15 44 30"/>
+          <path class="dragon-head" d="M157 91c-12-9-27-12-42-8l-18 8 14 9-18 15 22 2 8 15 10-16 18 1-8-13 14-13Z"/>
+          <path d="M111 97 91 86m28 4-3-19m18 18 12-16m-22 31 8 3"/>
+          <circle cx="123" cy="96" r="2.7" fill="#d9f9ff" stroke="none"/>
+          <path d="M278 199c18 18 44 31 72 34m54-85c12 21 31 39 54 50m-195 44c-11 22-26 40-46 53m78-56c4 20 2 40-7 58"/>
+          <path class="dragon-whisker" d="M101 109c-34 5-57 19-73 43m92-42c-32 21-47 48-50 78"/>
+        </g>
+      </svg>
+
+      <svg class="orchid-art" viewBox="0 0 330 260" role="img">
+        <defs>
+          <linearGradient id="orchidStroke" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#5ad9ff" />
+            <stop offset="1" stop-color="#c9f6ff" />
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#orchidStroke)" stroke-linecap="round" stroke-linejoin="round">
+          <path class="orchid-stem" d="M39 249c49-45 65-104 72-163 5-39 29-61 59-76"/>
+          <path d="M81 179c-29 0-49-14-63-37 27-5 48 4 64 28m19-62c-23-8-38-24-46-47 25 1 43 13 53 35m14 21c16-26 38-40 66-42-6 28-23 47-52 57"/>
+          <g class="orchid-flower" transform="translate(172 27)">
+            <path d="M0 42C-31 31-42 5-25-13-2-8 11 10 8 34"/>
+            <path d="M8 35C15 4 40-11 59 1 57 26 37 42 12 42"/>
+            <path d="M6 40c-16 20-15 44 2 58 22-8 30-31 15-53"/>
+            <path d="M2 39c-19-5-38 4-46 22 12 18 35 21 51 5"/>
+            <path d="M8 42c10-10 25-10 34 1-7 15-23 20-34 9-7 5-13 2-15-5 2-6 8-9 15-5Z"/>
+          </g>
+          <g class="orchid-flower small" transform="translate(107 89) scale(.72)">
+            <path d="M0 42C-31 31-42 5-25-13-2-8 11 10 8 34"/>
+            <path d="M8 35C15 4 40-11 59 1 57 26 37 42 12 42"/>
+            <path d="M6 40c-16 20-15 44 2 58 22-8 30-31 15-53"/>
+            <path d="M2 39c-19-5-38 4-46 22 12 18 35 21 51 5"/>
+            <path d="M8 42c10-10 25-10 34 1-7 15-23 20-34 9-7 5-13 2-15-5 2-6 8-9 15-5Z"/>
+          </g>
+        </g>
+      </svg>
     </div>
+
+    <div class="spark spark-one" aria-hidden="true"></div>
+    <div class="spark spark-two" aria-hidden="true"></div>
+    <div class="spark spark-three" aria-hidden="true"></div>
+    <div class="spark spark-four" aria-hidden="true"></div>
+    <div class="spark spark-five" aria-hidden="true"></div>
+
+    <section class="welcome-block">
+      <div class="mini-label">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span id="periodLabel">MODO NOCHE</span>
+      </div>
+
+      <h1 class="greeting">
+        <span id="greeting">Buenas noches</span>,
+        <span class="kanelista">Kanelista.</span>
+      </h1>
+
+      <div class="hourly-message">
+        <span class="message-star" aria-hidden="true">✦</span>
+        <p id="message">Haz espacio para una noche tranquila.</p>
+      </div>
+    </section>
+
+    <section class="time-block" aria-label="Hora y fecha en Lima">
+      <div class="clock" id="clock">08:00</div>
+      <div class="date" id="date">Viernes, 17 de julio</div>
+      <div class="location">
+        <span class="location-line" aria-hidden="true"></span>
+        Lima · UTC−5
+      </div>
+    </section>
   </main>
-  <script src="quotes.js"></script>
-  <script src="inicio.js"></script>
 </body>
 </html>
