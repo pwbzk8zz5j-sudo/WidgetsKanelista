@@ -1,0 +1,17 @@
+KANELISTA — WIDGET CENTRAL INTERACTIVO
+
+Archivos:
+- centro.html
+- centro.css
+- centro.js
+
+Cómo subirlo:
+1. Sube los tres archivos a la raíz de tu repositorio WidgetsKanelista.
+2. Haz commit.
+3. Abre:
+   https://pwbzk8zz5j-sudo.github.io/WidgetsKanelista/centro.html
+4. En Notion escribe /embed y pega ese enlace.
+
+Interacción:
+- El núcleo responde al mouse.
+- Al tocarlo cambia la frase, el símbolo y el mensaje inferior.
