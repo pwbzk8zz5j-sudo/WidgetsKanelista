@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanelista Boarding Pass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="trabajo.css" />
+</head>
+<body>
+  <main class="widget-shell">
+    <section class="boarding-pass" aria-label="Boarding pass decorativo de trabajo">
+      <div class="scan-line"></div>
+      <div class="pass-main">
+        <header class="topbar">
+          <div class="brand-lockup">
+            <div class="wing-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div><p class="eyebrow">BOARDING PASS</p><h1>CREW MODE</h1></div>
+          </div>
+          <div class="status-pill"><span class="status-dot"></span><span id="statusText">READY FOR DEPARTURE</span></div>
+        </header>
+
+        <div class="route-row">
+          <div class="airport"><span class="label">FROM</span><strong>LIM</strong><small>Lima</small></div>
+          <div class="flight-path" aria-hidden="true">
+            <div class="path-line"><span class="path-dot start"></span><span class="path-dot end"></span><span class="plane">✈</span></div>
+            <span class="flight-number">AA · KNL 420</span>
+          </div>
+          <div class="airport right"><span class="label">TO</span><strong>WORK</strong><small>On duty</small></div>
+        </div>
+
+        <footer class="details-row">
+          <div class="detail"><span class="label">DATE</span><strong id="dateText">FRI · 17 JUL</strong></div>
+          <div class="detail"><span class="label">TIME</span><strong id="timeText">20:48</strong></div>
+          <div class="detail"><span class="label">ZONE</span><strong>UTC −5</strong></div>
+          <div class="detail gate"><span class="label">GATE</span><strong>W01</strong></div>
+        </footer>
+      </div>
+
+      <aside class="ticket-stub">
+        <div class="stub-top"><span>CREW</span><span>✈</span></div>
+        <div class="stub-date"><span id="weekdayText">FRIDAY</span><strong id="dayNumber">17</strong><small id="monthText">JULY</small></div>
+        <div class="barcode" aria-hidden="true">|||| ||| | |||| || | ||| |||| |</div>
+        <p>KANELISTA · 2026</p>
+      </aside>
+    </section>
+  </main>
+  <script src="trabajo.js"></script>
+</body>
+</html>
