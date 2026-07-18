@@ -12,26 +12,22 @@
     <div class="backdrop" id="backdrop"></div>
     <div class="noise"></div>
 
+    <button class="close-session hidden" id="disconnectButton" type="button" aria-label="Desconectar Spotify">×</button>
+
     <section class="connect-view" id="connectView">
-      <div class="spotify-mark" aria-hidden="true">
-        <span>♫</span>
+      <div class="mini-icon">♫</div>
+      <div class="connect-copy">
+        <p class="eyebrow">KANELISTA AMBIENT</p>
+        <h1>Conecta tu Spotify</h1>
+        <p>Tu canción actual aparecerá aquí.</p>
       </div>
-      <p class="eyebrow">KANELISTA AMBIENT</p>
-      <h1>Tu música, al final del recorrido.</h1>
-      <p class="description">
-        Conecta Spotify para mostrar lo que estás escuchando en este momento.
-      </p>
-      <button class="primary" id="connectButton" type="button">
-        Conectar Spotify
-      </button>
-      <p class="privacy">Solo lee tu reproducción actual. No controla tu cuenta.</p>
+      <button class="primary" id="connectButton" type="button">Conectar</button>
     </section>
 
     <section class="music-view hidden" id="musicView">
       <div class="visual">
         <div class="halo"></div>
         <div class="vinyl" id="vinyl">
-          <div class="vinyl-rings"></div>
           <img id="albumArt" alt="Portada del álbum">
           <span class="vinyl-hole"></span>
         </div>
@@ -43,7 +39,6 @@
             <p class="eyebrow" id="statusLabel">NOW PLAYING</p>
             <p class="device" id="deviceLabel">Spotify</p>
           </div>
-
           <div class="equalizer" id="equalizer" aria-label="Reproduciendo">
             <span></span><span></span><span></span><span></span>
           </div>
@@ -63,38 +58,30 @@
             <span id="duration">0:00</span>
           </div>
         </div>
-
-        <div class="actions">
-          <a class="primary compact" id="spotifyLink" href="https://open.spotify.com/" target="_blank" rel="noopener">
-            Abrir en Spotify ↗
-          </a>
-          <button class="ghost" id="refreshButton" type="button">Actualizar</button>
-          <button class="ghost danger" id="disconnectButton" type="button">Desconectar</button>
-        </div>
       </div>
+
+      <a class="primary open-button" id="spotifyLink" href="https://open.spotify.com/" target="_blank" rel="noopener">
+        Abrir Spotify ↗
+      </a>
     </section>
 
     <section class="idle-view hidden" id="idleView">
-      <div class="idle-orbit">
-        <span class="idle-star">✦</span>
-      </div>
-      <p class="eyebrow">SPOTIFY EN PAUSA</p>
-      <h1>El silencio también tiene ritmo.</h1>
-      <p id="idleText">Pon una canción y aparecerá aquí.</p>
-      <div class="actions centered">
-        <button class="primary compact" id="idleRefreshButton" type="button">Buscar música</button>
-        <button class="ghost danger" id="idleDisconnectButton" type="button">Desconectar</button>
+      <div class="idle-symbol">✦</div>
+      <div>
+        <p class="eyebrow">SPOTIFY EN PAUSA</p>
+        <h1>El silencio también tiene ritmo.</h1>
+        <p id="idleText">Pon una canción y aparecerá aquí.</p>
       </div>
     </section>
 
     <section class="error-view hidden" id="errorView">
-      <p class="eyebrow">ALGO SE ENREDÓ</p>
-      <h1 id="errorTitle">No pudimos consultar Spotify.</h1>
-      <p id="errorMessage">Vuelve a intentarlo.</p>
-      <div class="actions centered">
-        <button class="primary compact" id="retryButton" type="button">Reintentar</button>
-        <button class="ghost danger" id="errorDisconnectButton" type="button">Reconectar</button>
+      <div class="idle-symbol">!</div>
+      <div>
+        <p class="eyebrow">ALGO SE ENREDÓ</p>
+        <h1 id="errorTitle">No pudimos consultar Spotify.</h1>
+        <p id="errorMessage">Vuelve a intentarlo.</p>
       </div>
+      <button class="primary" id="retryButton" type="button">Reintentar</button>
     </section>
 
     <div class="loading hidden" id="loading" aria-label="Cargando">
