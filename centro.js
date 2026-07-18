@@ -1,52 +1,104 @@
-const widget = document.getElementById("widget");
-const core = document.getElementById("core");
-const title = document.getElementById("title");
-const icon = document.getElementById("icon");
-const hint = document.getElementById("hint");
+(() => {
+  "use strict";
 
-const states = [
-  { title: "Todo empieza con una idea.", icon: "✦", hint: "Toca el núcleo para cambiar de energía" },
-  { title: "Haz espacio para lo que viene.", icon: "◌", hint: "Tu dashboard también puede respirar" },
-  { title: "Menos ruido. Más intención.", icon: "◇", hint: "Una pausa visual entre tus mundos" },
-  { title: "Convierte el caos en dirección.", icon: "↗", hint: "Siguiente parada: hacer que suceda" },
-  { title: "Estás construyendo algo tuyo.", icon: "✧", hint: "Y eso merece verse increíble" }
-];
+  const MESSAGES = [
+    "Vuelve al centro.",
+    "Suelta el ruido.",
+    "Una cosa a la vez.",
+    "Tu siguiente idea ya viene.",
+    "Respira antes de seguir.",
+    "No tienes que resolverlo todo hoy.",
+    "Haz espacio para lo importante.",
+    "Estás entrando en modo enfoque."
+  ];
 
-let current = 0;
+  const card = document.getElementById("portalCard");
+  const portal = document.getElementById("portalButton");
+  const message = document.getElementById("portalMessage");
+  const particleField = document.getElementById("particleField");
 
-function changeState() {
-  current = (current + 1) % states.length;
-  const state = states[current];
+  let messageIndex = 0;
+  let activationTimer = null;
+  let resetPointerTimer = null;
 
-  title.classList.remove("swap");
-  core.classList.remove("changed");
-  void title.offsetWidth;
+  function createParticles() {
+    const fragment = document.createDocumentFragment();
 
-  title.textContent = state.title;
-  icon.textContent = state.icon;
-  hint.textContent = state.hint;
+    for (let index = 0; index < 20; index += 1) {
+      const particle = document.createElement("span");
 
-  title.classList.add("swap");
-  core.classList.add("changed");
-  widget.classList.add("active");
+      particle.className = "particle";
+      particle.style.left = `${6 + Math.random() * 88}%`;
+      particle.style.top = `${10 + Math.random() * 78}%`;
+      particle.style.setProperty("--size", `${1.2 + Math.random() * 2.4}px`);
+      particle.style.setProperty("--opacity", `${0.18 + Math.random() * 0.52}`);
+      particle.style.setProperty("--duration", `${3.8 + Math.random() * 5.4}s`);
+      particle.style.setProperty("--delay", `${-Math.random() * 6}s`);
 
-  window.setTimeout(() => {
-    core.classList.remove("changed");
-    widget.classList.remove("active");
-  }, 650);
-}
+      fragment.appendChild(particle);
+    }
 
-core.addEventListener("click", changeState);
+    particleField.appendChild(fragment);
+  }
 
-widget.addEventListener("pointermove", (event) => {
-  const rect = widget.getBoundingClientRect();
-  const x = ((event.clientX - rect.left) / rect.width) * 100;
-  const y = ((event.clientY - rect.top) / rect.height) * 100;
-  widget.style.setProperty("--mx", `${x}%`);
-  widget.style.setProperty("--my", `${y}%`);
-});
+  function changeMessage() {
+    message.classList.add("is-changing");
 
-widget.addEventListener("pointerleave", () => {
-  widget.style.setProperty("--mx", "50%");
-  widget.style.setProperty("--my", "50%");
-});
+    window.setTimeout(() => {
+      messageIndex = (messageIndex + 1) % MESSAGES.length;
+      message.textContent = MESSAGES[messageIndex];
+      message.classList.remove("is-changing");
+    }, 250);
+  }
+
+  function activatePortal() {
+    portal.classList.remove("is-activated");
+    void portal.offsetWidth;
+    portal.classList.add("is-activated");
+
+    changeMessage();
+
+    window.clearTimeout(activationTimer);
+    activationTimer = window.setTimeout(() => {
+      portal.classList.remove("is-activated");
+    }, 1100);
+  }
+
+  function handlePointerMove(event) {
+    const bounds = card.getBoundingClientRect();
+    const normalizedX = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const normalizedY = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+    const moveX = normalizedX * 8;
+    const moveY = normalizedY * 6;
+    const rotateY = normalizedX * 6;
+    const rotateX = normalizedY * -5;
+
+    portal.style.setProperty("--mx", `${moveX}px`);
+    portal.style.setProperty("--my", `${moveY}px`);
+    portal.style.setProperty("--rx", `${rotateX}deg`);
+    portal.style.setProperty("--ry", `${rotateY}deg`);
+
+    window.clearTimeout(resetPointerTimer);
+    resetPointerTimer = window.setTimeout(resetPointer, 500);
+  }
+
+  function resetPointer() {
+    portal.style.setProperty("--mx", "0px");
+    portal.style.setProperty("--my", "0px");
+    portal.style.setProperty("--rx", "0deg");
+    portal.style.setProperty("--ry", "0deg");
+  }
+
+  portal.addEventListener("click", activatePortal);
+  card.addEventListener("pointermove", handlePointerMove);
+  card.addEventListener("pointerleave", resetPointer);
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      resetPointer();
+    }
+  });
+
+  createParticles();
+})();

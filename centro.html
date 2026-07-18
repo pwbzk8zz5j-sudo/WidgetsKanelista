@@ -3,44 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kanelista — Separador interactivo</title>
-  <link rel="stylesheet" href="centro.css" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="transparent" />
+
+  <title>Kanelista · Portal</title>
+
+  <link rel="stylesheet" href="centro.css?v=20260718-1" />
+  <script src="centro.js?v=20260718-1" defer></script>
 </head>
+
 <body>
-  <main class="divider-widget" id="widget">
-    <div class="ambient ambient-one"></div>
-    <div class="ambient ambient-two"></div>
+  <main class="widget-shell">
+    <article class="portal-card" id="portalCard" aria-label="Portal Kanelista">
+      <span class="ambient ambient-left" aria-hidden="true"></span>
+      <span class="ambient ambient-right" aria-hidden="true"></span>
 
-    <div class="line line-left"></div>
+      <div class="particle-field" id="particleField" aria-hidden="true"></div>
 
-    <button class="core" id="core" type="button" aria-label="Cambiar mensaje">
-      <span class="orbit orbit-one">
-        <span class="satellite"></span>
-      </span>
-      <span class="orbit orbit-two">
-        <span class="satellite"></span>
-      </span>
+      <section class="portal-stage">
+        <button class="portal" id="portalButton" type="button" aria-label="Activar portal">
+          <span class="ring ring-one"></span>
+          <span class="ring ring-two"></span>
+          <span class="ring ring-three"></span>
 
-      <span class="core-glow"></span>
-      <span class="core-center">
-        <span class="icon" id="icon">✦</span>
-      </span>
-    </button>
+          <span class="portal-glow"></span>
+          <span class="portal-core">
+            <span class="core-shine"></span>
+            <span class="core-symbol">✦</span>
+          </span>
 
-    <section class="copy" aria-live="polite">
-      <p class="eyebrow">KANELISTA DASHBOARD</p>
-      <h1 id="title">Todo empieza con una idea.</h1>
-      <p id="hint">Toca el núcleo para cambiar de energía</p>
-    </section>
+          <span class="pulse pulse-one"></span>
+          <span class="pulse pulse-two"></span>
+        </button>
 
-    <div class="line line-right"></div>
-
-    <span class="spark spark-one"></span>
-    <span class="spark spark-two"></span>
-    <span class="spark spark-three"></span>
-    <span class="spark spark-four"></span>
+        <div class="portal-copy">
+          <p class="eyebrow">PORTAL KANELISTA</p>
+          <h1 id="portalMessage">Vuelve al centro.</h1>
+          <p class="hint">Toca el núcleo</p>
+        </div>
+      </section>
+    </article>
   </main>
-
-  <script src="centro.js"></script>
 </body>
 </html>
