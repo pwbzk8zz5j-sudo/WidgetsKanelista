@@ -453,3 +453,32 @@ body {
     transition-duration: .001ms !important;
   }
 }
+
+/* Transición de frases personalizadas */
+.hourly-message p {
+  transition:
+    opacity 0.34s ease,
+    transform 0.34s ease,
+    filter 0.34s ease;
+}
+
+.hourly-message.is-changing p {
+  opacity: 0;
+  transform: translateY(7px);
+  filter: blur(3px);
+}
+
+.greeting #greeting {
+  display: inline-block;
+  transition:
+    opacity 0.32s ease,
+    transform 0.32s ease,
+    filter 0.32s ease;
+}
+
+.greeting.is-changing #greeting {
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(3px);
+}
+
