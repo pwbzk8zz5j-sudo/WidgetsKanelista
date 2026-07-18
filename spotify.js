@@ -1,5 +1,6 @@
 const CLIENT_ID = "5386cabc1af846769d22adb4577396b2";
 const REDIRECT_URI = "https://pwbzk8zz5j-sudo.github.io/WidgetsKanelista/callback.html";
+const APP_ORIGIN = "https://pwbzk8zz5j-sudo.github.io";
 const AUTH_URL = "https://accounts.spotify.com/authorize";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
 const API_URL = "https://api.spotify.com/v1/me/player";
@@ -41,6 +42,8 @@ const ui = {
 let playback = null;
 let progressTimer = null;
 let pollingTimer = null;
+let authPopup = null;
+let popupWatchTimer = null;
 
 function randomString(length = 64) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
@@ -60,30 +63,144 @@ async function sha256(value) {
 }
 
 async function connectSpotify() {
-  const verifier = randomString(64);
-  const challenge = base64UrlEncode(await sha256(verifier));
-  const state = randomString(32);
+  try {
+    const verifier = randomString(64);
+    const challenge = base64UrlEncode(await sha256(verifier));
+    const state = randomString(32);
 
-  localStorage.setItem("spotify_code_verifier", verifier);
-  localStorage.setItem("spotify_auth_state", state);
+    // Estos datos se guardan dentro del propio contexto del embed.
+    localStorage.setItem("spotify_code_verifier", verifier);
+    localStorage.setItem("spotify_auth_state", state);
 
-  const params = new URLSearchParams({
-    response_type: "code",
-    client_id: CLIENT_ID,
-    scope: SCOPES,
-    redirect_uri: REDIRECT_URI,
-    state,
-    code_challenge_method: "S256",
-    code_challenge: challenge,
-    show_dialog: "true"
-  });
+    const params = new URLSearchParams({
+      response_type: "code",
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      redirect_uri: REDIRECT_URI,
+      state,
+      code_challenge_method: "S256",
+      code_challenge: challenge,
+      show_dialog: "true"
+    });
 
-  // En un embed de Notion, abre Spotify fuera del iframe.
-  window.open(`${AUTH_URL}?${params.toString()}`, "_blank", "noopener");
+    const width = 520;
+    const height = 720;
+    const left = Math.max(0, (window.screen.width - width) / 2);
+    const top = Math.max(0, (window.screen.height - height) / 2);
+
+    // IMPORTANTE: no usamos "noopener", porque callback.html necesita
+    // comunicarse de vuelta con este embed mediante window.opener.
+    authPopup = window.open(
+      `${AUTH_URL}?${params.toString()}`,
+      "kanelista_spotify_auth",
+      `popup=yes,width=${width},height=${height},left=${left},top=${top}`
+    );
+
+    if (!authPopup) {
+      throw new Error("El navegador bloqueó la ventana de Spotify. Permite las ventanas emergentes y vuelve a intentarlo.");
+    }
+
+    clearInterval(popupWatchTimer);
+    popupWatchTimer = setInterval(() => {
+      if (authPopup?.closed) {
+        clearInterval(popupWatchTimer);
+        authPopup = null;
+      }
+    }, 500);
+  } catch (error) {
+    renderError(error);
+  }
 }
 
+async function exchangeAuthorizationCode(code, returnedState) {
+  const verifier = localStorage.getItem("spotify_code_verifier");
+  const expectedState = localStorage.getItem("spotify_auth_state");
+
+  if (!verifier) {
+    throw new Error("Se perdió el verificador de seguridad. Pulsa conectar e inténtalo otra vez.");
+  }
+
+  if (!expectedState || expectedState !== returnedState) {
+    throw new Error("La validación de seguridad no coincide. Pulsa conectar nuevamente.");
+  }
+
+  setLoading(true);
+
+  try {
+    const response = await fetch(TOKEN_URL, {
+      method: "POST",
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      body: new URLSearchParams({
+        client_id: CLIENT_ID,
+        grant_type: "authorization_code",
+        code,
+        redirect_uri: REDIRECT_URI,
+        code_verifier: verifier
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error_description || "Spotify rechazó la autorización.");
+    }
+
+    localStorage.setItem("spotify_access_token", data.access_token);
+    localStorage.setItem(
+      "spotify_token_expires_at",
+      String(Date.now() + data.expires_in * 1000)
+    );
+
+    if (data.refresh_token) {
+      localStorage.setItem("spotify_refresh_token", data.refresh_token);
+    }
+
+    localStorage.removeItem("spotify_code_verifier");
+    localStorage.removeItem("spotify_auth_state");
+
+    await fetchPlayback({silent: true});
+    startPolling();
+  } finally {
+    setLoading(false);
+  }
+}
+
+window.addEventListener("message", async (event) => {
+  // El mensaje solo puede venir de nuestro propio callback en GitHub Pages.
+  if (event.origin !== APP_ORIGIN) return;
+
+  const payload = event.data;
+  if (!payload || payload.type !== "kanelista_spotify_callback") return;
+
+  clearInterval(popupWatchTimer);
+
+  if (payload.error) {
+    renderError(new Error(
+      payload.error === "access_denied"
+        ? "Cancelaste el permiso de Spotify."
+        : `Spotify devolvió este error: ${payload.error}`
+    ));
+    return;
+  }
+
+  if (!payload.code || !payload.state) {
+    renderError(new Error("Spotify no devolvió todos los datos de autorización."));
+    return;
+  }
+
+  try {
+    await exchangeAuthorizationCode(payload.code, payload.state);
+  } catch (error) {
+    console.error(error);
+    renderError(error);
+  }
+});
+
 function hasSession() {
-  return Boolean(localStorage.getItem("spotify_refresh_token") || localStorage.getItem("spotify_access_token"));
+  return Boolean(
+    localStorage.getItem("spotify_refresh_token") ||
+    localStorage.getItem("spotify_access_token")
+  );
 }
 
 function clearSession() {
@@ -98,7 +215,10 @@ function clearSession() {
 
 async function refreshAccessToken() {
   const refreshToken = localStorage.getItem("spotify_refresh_token");
-  if (!refreshToken) throw new Error("Tu sesión venció. Conecta Spotify otra vez.");
+
+  if (!refreshToken) {
+    throw new Error("Tu sesión venció. Conecta Spotify otra vez.");
+  }
 
   const response = await fetch(TOKEN_URL, {
     method: "POST",
@@ -111,13 +231,17 @@ async function refreshAccessToken() {
   });
 
   const data = await response.json();
+
   if (!response.ok) {
     clearSession();
     throw new Error(data.error_description || "No pudimos renovar la sesión.");
   }
 
   localStorage.setItem("spotify_access_token", data.access_token);
-  localStorage.setItem("spotify_token_expires_at", String(Date.now() + data.expires_in * 1000));
+  localStorage.setItem(
+    "spotify_token_expires_at",
+    String(Date.now() + data.expires_in * 1000)
+  );
 
   if (data.refresh_token) {
     localStorage.setItem("spotify_refresh_token", data.refresh_token);
@@ -154,8 +278,10 @@ function formatTime(milliseconds = 0) {
 function updateProgress() {
   if (!playback?.item) return;
 
-  const now = Date.now();
-  const elapsedSinceFetch = playback.is_playing ? now - playback.fetchedAt : 0;
+  const elapsedSinceFetch = playback.is_playing
+    ? Date.now() - playback.fetchedAt
+    : 0;
+
   const position = Math.min(
     playback.item.duration_ms,
     playback.progress_ms + elapsedSinceFetch
@@ -176,6 +302,15 @@ function startProgressTimer() {
   progressTimer = setInterval(updateProgress, 1000);
 }
 
+function startPolling() {
+  clearInterval(pollingTimer);
+  pollingTimer = setInterval(() => {
+    if (!document.hidden && hasSession()) {
+      fetchPlayback({silent: true});
+    }
+  }, 10_000);
+}
+
 function renderPlayback(data) {
   playback = {...data, fetchedAt: Date.now()};
 
@@ -193,7 +328,9 @@ function renderPlayback(data) {
   ui.deviceLabel.textContent = data.device?.name
     ? `${data.device.name} · ${data.device.type || "Spotify"}`
     : "Spotify";
-  ui.spotifyLink.href = item.external_urls?.spotify || "https://open.spotify.com/";
+
+  ui.spotifyLink.href =
+    item.external_urls?.spotify || "https://open.spotify.com/";
 
   ui.albumArt.src = image;
   ui.albumArt.alt = item.name ? `Portada de ${item.name}` : "Portada";
@@ -201,7 +338,10 @@ function renderPlayback(data) {
 
   ui.vinyl.classList.toggle("playing", data.is_playing);
   ui.equalizer.classList.toggle("playing", data.is_playing);
-  ui.equalizer.setAttribute("aria-label", data.is_playing ? "Reproduciendo" : "En pausa");
+  ui.equalizer.setAttribute(
+    "aria-label",
+    data.is_playing ? "Reproduciendo" : "En pausa"
+  );
 
   show("musicView");
   startProgressTimer();
@@ -233,15 +373,18 @@ async function fetchPlayback({silent = false} = {}) {
 
   try {
     const token = await getValidToken();
-    let response = await fetch(`${API_URL}?additional_types=track,episode`, {
-      headers: {Authorization: `Bearer ${token}`}
-    });
+
+    let response = await fetch(
+      `${API_URL}?additional_types=track,episode`,
+      {headers: {Authorization: `Bearer ${token}`}}
+    );
 
     if (response.status === 401) {
       const renewed = await refreshAccessToken();
-      response = await fetch(`${API_URL}?additional_types=track,episode`, {
-        headers: {Authorization: `Bearer ${renewed}`}
-      });
+      response = await fetch(
+        `${API_URL}?additional_types=track,episode`,
+        {headers: {Authorization: `Bearer ${renewed}`}}
+      );
     }
 
     if (response.status === 204) {
@@ -250,11 +393,15 @@ async function fetchPlayback({silent = false} = {}) {
     }
 
     if (response.status === 403) {
-      throw new Error("Spotify no permitió leer la reproducción. Revisa que autorizaste ambos permisos.");
+      throw new Error(
+        "Spotify no permitió leer la reproducción. Reconecta y acepta ambos permisos."
+      );
     }
 
     if (response.status === 429) {
-      throw new Error("Spotify pidió esperar un poco antes de volver a consultar.");
+      throw new Error(
+        "Spotify pidió esperar un poco antes de volver a consultar."
+      );
     }
 
     if (!response.ok) {
@@ -281,6 +428,8 @@ function disconnect() {
   clearSession();
   clearInterval(progressTimer);
   clearInterval(pollingTimer);
+  clearInterval(popupWatchTimer);
+
   playback = null;
   ui.backdrop.style.backgroundImage = "none";
   show("connectView");
@@ -289,18 +438,20 @@ function disconnect() {
 ui.connectButton.addEventListener("click", connectSpotify);
 ui.refreshButton.addEventListener("click", () => fetchPlayback());
 ui.idleRefreshButton.addEventListener("click", () => fetchPlayback());
-ui.retryButton.addEventListener("click", () => fetchPlayback());
-
-[ui.disconnectButton, ui.idleDisconnectButton, ui.errorDisconnectButton]
-  .forEach(button => button.addEventListener("click", disconnect));
-
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && hasSession()) fetchPlayback({silent:true});
+ui.retryButton.addEventListener("click", () => {
+  if (hasSession()) fetchPlayback();
+  else connectSpotify();
 });
 
-window.addEventListener("storage", (event) => {
-  if (event.key === "spotify_access_token" || event.key === "spotify_refresh_token") {
-    fetchPlayback();
+[
+  ui.disconnectButton,
+  ui.idleDisconnectButton,
+  ui.errorDisconnectButton
+].forEach(button => button.addEventListener("click", disconnect));
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && hasSession()) {
+    fetchPlayback({silent: true});
   }
 });
 
@@ -311,7 +462,5 @@ window.addEventListener("storage", (event) => {
   }
 
   await fetchPlayback();
-  pollingTimer = setInterval(() => {
-    if (!document.hidden) fetchPlayback({silent:true});
-  }, 10_000);
+  startPolling();
 })();
