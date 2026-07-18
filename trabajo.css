@@ -27,7 +27,7 @@
   --warning: #ffc878;
   --rest: #a9b6ff;
 
-  --radius: 30px;
+  --radius: 25px;
 }
 
 * {
@@ -73,17 +73,17 @@ select {
   min-height: 100dvh;
   display: grid;
   place-items: center;
-  padding: clamp(10px, 2.4vw, 22px);
+  padding: clamp(8px, 1.7vw, 14px);
   background: transparent;
 }
 
 .boarding-pass {
   position: relative;
   isolation: isolate;
-  width: min(100%, 980px);
-  min-height: 268px;
+  width: min(100%, 820px);
+  min-height: 205px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 212px;
+  grid-template-columns: minmax(0, 1fr) 168px;
   overflow: hidden;
 
   border: 1px solid var(--border);
@@ -185,7 +185,7 @@ select {
   position: relative;
   z-index: 2;
   min-width: 0;
-  padding: 26px 32px 24px;
+  padding: 19px 23px 17px;
 }
 
 .ticket-header {
@@ -203,8 +203,8 @@ select {
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   flex: 0 0 auto;
   display: grid;
   place-items: center;
@@ -220,8 +220,8 @@ select {
 }
 
 .brand-mark svg {
-  width: 23px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   fill: var(--accent);
   filter: drop-shadow(0 0 10px rgba(120, 228, 255, 0.35));
 }
@@ -238,7 +238,7 @@ select {
 .eyebrow {
   margin: 0 0 3px;
   color: var(--accent);
-  font-size: 0.68rem;
+  font-size: 0.60rem;
   font-weight: 760;
 }
 
@@ -259,13 +259,13 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 34px;
-  padding: 0 13px;
+  min-height: 29px;
+  padding: 0 10px;
   border: 1px solid rgba(120, 228, 255, 0.20);
   border-radius: 999px;
   color: rgba(236, 249, 255, 0.88);
   background: rgba(120, 228, 255, 0.08);
-  font-size: 0.68rem;
+  font-size: 0.60rem;
   font-weight: 760;
   letter-spacing: 0.12em;
   white-space: nowrap;
@@ -313,10 +313,10 @@ select {
 
 .route {
   display: grid;
-  grid-template-columns: auto minmax(150px, 1fr) auto;
+  grid-template-columns: auto minmax(115px, 1fr) auto;
   align-items: center;
-  gap: clamp(20px, 4vw, 40px);
-  margin: 26px 0 23px;
+  gap: clamp(15px, 3vw, 27px);
+  margin: 18px 0 16px;
 }
 
 .airport {
@@ -330,23 +330,23 @@ select {
 
 .airport-code {
   color: var(--text);
-  font-size: clamp(2.15rem, 5.3vw, 3.65rem);
+  font-size: clamp(1.85rem, 4.5vw, 2.85rem);
   font-weight: 720;
   line-height: 0.86;
   letter-spacing: -0.055em;
 }
 
 .airport-city {
-  margin-top: 9px;
+  margin-top: 6px;
   color: var(--muted);
-  font-size: 0.73rem;
+  font-size: 0.64rem;
   font-weight: 560;
   letter-spacing: 0.055em;
 }
 
 .flight-path {
   position: relative;
-  height: 42px;
+  height: 34px;
   display: flex;
   align-items: center;
 }
@@ -387,8 +387,8 @@ select {
   position: absolute;
   top: 50%;
   left: 0;
-  width: 32px;
-  height: 32px;
+  width: 27px;
+  height: 27px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(120, 228, 255, 0.24);
@@ -406,8 +406,8 @@ select {
 }
 
 .moving-plane svg {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   fill: var(--accent);
   filter: drop-shadow(0 0 7px rgba(120, 228, 255, 0.55));
   transform: rotate(2deg);
@@ -416,14 +416,14 @@ select {
 .details-grid {
   display: grid;
   grid-template-columns: 1.15fr 1.2fr 1fr 0.8fr;
-  gap: 12px;
+  gap: 8px;
 }
 
 .detail {
   min-width: 0;
-  padding: 13px 14px 12px;
+  padding: 9px 10px 8px;
   border: 1px solid rgba(188, 226, 255, 0.09);
-  border-radius: 15px;
+  border-radius: 12px;
 
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.017));
@@ -435,9 +435,9 @@ select {
 
 .detail-label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   color: var(--faint);
-  font-size: 0.55rem;
+  font-size: 0.48rem;
   font-weight: 740;
   white-space: nowrap;
 }
@@ -446,7 +446,7 @@ select {
   display: block;
   overflow: hidden;
   color: rgba(248, 252, 255, 0.94);
-  font-size: 0.88rem;
+  font-size: 0.76rem;
   font-weight: 690;
   letter-spacing: 0.03em;
   text-overflow: ellipsis;
@@ -464,14 +464,14 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .ticket-footer p {
   margin: 0;
   overflow: hidden;
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: 0.63rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-overflow: ellipsis;
@@ -484,7 +484,7 @@ select {
   align-items: center;
   gap: 6px;
   color: var(--faint);
-  font-size: 0.67rem;
+  font-size: 0.53rem;
   font-weight: 580;
 }
 
@@ -540,7 +540,7 @@ select {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 25px 25px 23px 28px;
+  padding: 18px 17px 16px 20px;
 
   background:
     radial-gradient(circle at 72% 0%, rgba(120, 228, 255, 0.08), transparent 42%),
@@ -567,18 +567,18 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stub-label {
   color: var(--muted);
-  font-size: 0.59rem;
+  font-size: 0.53rem;
   font-weight: 750;
 }
 
 .stub-number {
   color: var(--accent);
-  font-size: 0.74rem;
+  font-size: 0.66rem;
   font-weight: 770;
 }
 
@@ -587,12 +587,12 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 9px;
-  margin: 17px 0;
+  margin: 12px 0;
 }
 
 .stub-route {
   color: rgba(248, 252, 255, 0.95);
-  font-size: 1.46rem;
+  font-size: 1.18rem;
   font-weight: 720;
   letter-spacing: -0.035em;
 }
@@ -605,7 +605,7 @@ select {
 }
 
 .barcode {
-  height: 55px;
+  height: 39px;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -628,8 +628,8 @@ select {
 }
 
 .stub-bottom {
-  margin-top: 17px;
-  padding-top: 13px;
+  margin-top: 12px;
+  padding-top: 9px;
   border-top: 1px solid rgba(188, 226, 255, 0.10);
 }
 
@@ -641,14 +641,194 @@ select {
 
 .stub-bottom strong {
   color: rgba(247, 251, 255, 0.92);
-  font-size: 0.72rem;
+  font-size: 0.63rem;
   font-weight: 730;
   letter-spacing: 0.08em;
 }
 
-/* ---------- Responsive ---------- */
+/* ---------- Responsive compacto ---------- */
 
 @media (max-width: 760px) {
+  .widget-shell {
+    padding: 8px;
+  }
+
+  .boarding-pass {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) 142px;
+    min-height: 188px;
+  }
+
+  .ticket-main {
+    padding: 16px 17px 14px;
+  }
+
+  .ticket-stub {
+    padding: 16px 14px 14px 17px;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 11px;
+  }
+
+  .brand-mark svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .route {
+    grid-template-columns: auto minmax(82px, 1fr) auto;
+    gap: 12px;
+    margin: 15px 0 13px;
+  }
+
+  .airport-code {
+    font-size: clamp(1.65rem, 6vw, 2.35rem);
+  }
+
+  .airport-city {
+    font-size: 0.57rem;
+  }
+
+  .details-grid {
+    gap: 6px;
+  }
+
+  .detail {
+    padding: 8px 8px 7px;
+  }
+
+  .ticket-footer {
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  .ticket-footer p {
+    max-width: 62%;
+    font-size: 0.58rem;
+  }
+
+  .timezone {
+    font-size: 0.54rem;
+    white-space: nowrap;
+  }
+
+  .stub-route {
+    font-size: 1.02rem;
+  }
+
+  .barcode {
+    height: 32px;
+  }
+}
+
+@media (max-width: 610px) {
+  .boarding-pass {
+    grid-template-columns: minmax(0, 1fr) 118px;
+    border-radius: 21px;
+  }
+
+  .ticket-main {
+    padding: 14px;
+  }
+
+  .ticket-stub {
+    padding: 14px 11px 12px 14px;
+  }
+
+  .brand-mark {
+    display: none;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .eyebrow {
+    font-size: 0.52rem;
+  }
+
+  .brand h1 {
+    font-size: 0.72rem;
+  }
+
+  .status-pill {
+    min-height: 25px;
+    padding-inline: 8px;
+    font-size: 0.50rem;
+  }
+
+  .route {
+    grid-template-columns: auto minmax(58px, 1fr) auto;
+    gap: 9px;
+  }
+
+  .airport-code {
+    font-size: clamp(1.48rem, 6.5vw, 2rem);
+  }
+
+  .flight-path {
+    height: 28px;
+  }
+
+  .moving-plane {
+    width: 23px;
+    height: 23px;
+  }
+
+  .moving-plane svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .detail-label {
+    font-size: 0.42rem;
+  }
+
+  .detail-value {
+    font-size: 0.66rem;
+  }
+
+  .ticket-footer p {
+    display: none;
+  }
+
+  .timezone {
+    margin-left: auto;
+  }
+
+  .stub-label,
+  .stub-bottom span {
+    font-size: 0.43rem;
+  }
+
+  .stub-number,
+  .stub-bottom strong {
+    font-size: 0.57rem;
+  }
+
+  .stub-center {
+    gap: 5px;
+  }
+
+  .stub-route {
+    font-size: 0.88rem;
+  }
+
+  .barcode {
+    height: 27px;
+    gap: 1px;
+  }
+}
+
+/* Solo se apila en espacios realmente pequeños. */
+@media (max-width: 480px) {
   body {
     overflow: auto;
   }
@@ -663,12 +843,12 @@ select {
   }
 
   .ticket-main {
-    padding: 23px 22px 24px;
+    padding: 17px 16px 15px;
   }
 
   .ticket-stub {
-    min-height: 155px;
-    padding: 23px 24px;
+    min-height: 102px;
+    padding: 15px 18px 14px;
     border-top: 1px dashed rgba(188, 226, 255, 0.18);
   }
 
@@ -681,147 +861,40 @@ select {
   .perforation::after {
     top: 0;
     bottom: auto;
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     transform: translateY(-50%);
   }
 
   .perforation::before {
-    left: -13px;
+    left: -11px;
   }
 
   .perforation::after {
-    right: -13px;
+    right: -11px;
     left: auto;
   }
 
   .perforation-line {
     top: 0;
-    right: 22px;
+    right: 20px;
     bottom: auto;
-    left: 22px;
+    left: 20px;
     border-top: 1px dashed rgba(188, 226, 255, 0.20);
     border-left: 0;
   }
 
   .stub-center {
     justify-content: center;
-    gap: 22px;
-    margin: 12px 0;
+    gap: 20px;
+    margin: 8px 0;
   }
 
   .barcode {
-    max-width: 250px;
+    max-width: 230px;
     width: 100%;
-    height: 39px;
+    height: 25px;
     margin-inline: auto;
-  }
-}
-
-@media (max-width: 560px) {
-  .widget-shell {
-    padding: 9px;
-  }
-
-  .boarding-pass {
-    border-radius: 24px;
-  }
-
-  .ticket-header {
-    align-items: flex-start;
-  }
-
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-    border-radius: 13px;
-  }
-
-  .brand h1 {
-    font-size: 0.82rem;
-  }
-
-  .eyebrow {
-    font-size: 0.59rem;
-  }
-
-  .status-pill {
-    min-height: 30px;
-    padding: 0 10px;
-    font-size: 0.59rem;
-  }
-
-  .route {
-    grid-template-columns: auto minmax(72px, 1fr) auto;
-    gap: 13px;
-    margin: 25px 0 22px;
-  }
-
-  .airport-code {
-    font-size: clamp(2rem, 16vw, 3rem);
-  }
-
-  .airport-city {
-    font-size: 0.64rem;
-  }
-
-  .moving-plane {
-    width: 28px;
-    height: 28px;
-  }
-
-  .moving-plane svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .details-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .ticket-footer {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 9px;
-  }
-
-  .ticket-footer p {
-    width: 100%;
-    white-space: normal;
-  }
-}
-
-@media (max-width: 390px) {
-  .ticket-main {
-    padding-inline: 17px;
-  }
-
-  .brand {
-    gap: 9px;
-  }
-
-  .brand-mark {
-    display: none;
-  }
-
-  .status-pill {
-    padding-inline: 9px;
-  }
-
-  .route {
-    gap: 10px;
-  }
-
-  .airport-code {
-    font-size: 2.05rem;
-  }
-
-  .airport-city {
-    max-width: 72px;
-  }
-
-  .ticket-stub {
-    padding-inline: 20px;
   }
 }
 
