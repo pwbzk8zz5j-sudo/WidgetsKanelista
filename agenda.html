@@ -4,132 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark" />
-  <meta name="theme-color" content="transparent" />
-
-  <title>Kanelista — Agenda</title>
-
-  <link rel="stylesheet" href="agenda.css?v=20260717-1" />
-  <script src="agenda.js?v=20260717-1" defer></script>
+  <title>Kanelista · Agenda</title>
+  <link rel="stylesheet" href="agenda.css?v=20260717-3" />
+  <script src="agenda.js?v=20260717-3" defer></script>
 </head>
-
 <body>
   <main class="widget-shell">
-    <article class="agenda-card" id="agendaCard" data-period="night" data-weather="cloudy">
-      <span class="shine" aria-hidden="true"></span>
-      <span class="orb orb-one" aria-hidden="true"></span>
-      <span class="orb orb-two" aria-hidden="true"></span>
-      <span class="stars" aria-hidden="true">
-        <i></i><i></i><i></i><i></i><i></i>
-      </span>
+    <article class="agenda-card" id="agendaCard" data-period="night">
+      <span class="glow glow-left" aria-hidden="true"></span>
+      <span class="glow glow-right" aria-hidden="true"></span>
 
-      <section class="date-panel" aria-label="Fecha actual">
-        <header class="panel-header">
-          <div>
-            <p class="eyebrow">AGENDA · HOY</p>
-            <p class="year" id="year">2026</p>
-          </div>
-
-          <div class="live-pill">
-            <span class="live-dot" aria-hidden="true"></span>
-            <span>EN VIVO</span>
-          </div>
-        </header>
+      <section class="date-side" aria-label="Fecha actual">
+        <p class="eyebrow">AGENDA · HOY</p>
 
         <div class="date-main">
-          <p class="weekday" id="weekday">Viernes</p>
-
-          <div class="day-row">
-            <strong class="day-number" id="dayNumber">17</strong>
-
-            <div class="month-block">
-              <span class="month" id="month">Julio</span>
-              <span class="date-caption" id="dateCaption">Semana 29</span>
-            </div>
+          <div class="date-big">
+            <span class="day-number" id="dayNumber">17</span>
           </div>
 
-          <p class="daily-message" id="dailyMessage">
-            Un día a la vez, pero con estilo.
-          </p>
+          <div class="date-meta">
+            <p class="weekday" id="weekday">Viernes</p>
+            <p class="month" id="month">Julio</p>
+            <p class="yearline">
+              <span id="year">2026</span>
+              <span class="dot">•</span>
+              <span id="weekLabel">Semana 29</span>
+            </p>
+          </div>
         </div>
 
-        <footer class="date-footer">
-          <span class="clock-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="8.5"></circle>
-              <path d="M12 7.2v5.2l3.4 2"></path>
-            </svg>
-          </span>
+        <p class="message" id="message">Organiza tu día sin ahogarte en él.</p>
 
-          <time class="clock" id="clock">19:00</time>
+        <div class="date-bottom">
+          <span class="time" id="clock">22:46</span>
+          <span class="sep">·</span>
           <span class="timezone" id="timezoneLabel">UTC−5</span>
-        </footer>
+        </div>
       </section>
 
       <div class="divider" aria-hidden="true"></div>
 
-      <section class="weather-panel" aria-label="Clima actual">
-        <header class="weather-header">
-          <button class="location-button" id="locationButton" type="button" title="Usar mi ubicación">
-            <span class="pin" aria-hidden="true">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"></path>
-                <circle cx="12" cy="10" r="2"></circle>
-              </svg>
-            </span>
-
+      <section class="weather-side" aria-label="Clima actual">
+        <div class="weather-top">
+          <button class="location" id="locationButton" type="button" title="Usar mi ubicación">
+            <span class="pin">⌾</span>
             <span id="locationName">Lima</span>
           </button>
 
-          <span class="updated" id="updatedLabel">Actualizando…</span>
-        </header>
+          <span class="live-pill">
+            <span class="live-dot"></span>
+            <span id="updatedLabel">AHORA</span>
+          </span>
+        </div>
 
         <div class="weather-main">
-          <div class="weather-icon" id="weatherIcon" aria-hidden="true">
-            <svg viewBox="0 0 120 120">
-              <circle class="sun-core" cx="45" cy="42" r="19"></circle>
-              <path class="cloud-main" d="M36 84h51c12 0 21-8 21-19s-9-19-21-19c-3 0-6 .7-8.5 1.9C74.8 37 65 29.5 53.4 29.5 39.4 29.5 28 40.9 28 55v1.2C17.7 57.8 10 66.3 10 76.5 10 88.4 19.7 98 31.6 98H36Z"></path>
-            </svg>
-          </div>
+          <div class="icon-wrap" id="weatherIcon" aria-hidden="true"></div>
 
-          <div class="temperature-wrap">
-            <div class="temperature-line">
-              <strong id="temperature">--</strong>
-              <span>°</span>
+          <div class="weather-text">
+            <div class="temp-line">
+              <span class="temp" id="temperature">23</span>
+              <span class="temp-degree">°</span>
             </div>
-
-            <p class="condition" id="condition">Cargando clima…</p>
-            <p class="feels-like" id="feelsLike">Sensación térmica --°</p>
+            <p class="condition" id="condition">Cielo despejado</p>
+            <p class="feels-like" id="feelsLike">Sensación térmica 23°</p>
           </div>
         </div>
 
-        <div class="weather-stats" aria-label="Detalles del clima">
-          <div class="stat">
-            <span class="stat-icon" aria-hidden="true">↕</span>
-            <span class="stat-label">MÁX / MÍN</span>
-            <strong id="highLow">--° / --°</strong>
+        <div class="weather-chips">
+          <div class="chip">
+            <span class="chip-label">Máx / mín</span>
+            <strong id="highLow">24° / 23°</strong>
           </div>
 
-          <div class="stat">
-            <span class="stat-icon" aria-hidden="true">◔</span>
-            <span class="stat-label">LLUVIA</span>
-            <strong id="rainChance">--%</strong>
+          <div class="chip">
+            <span class="chip-label">Lluvia</span>
+            <strong id="rainChance">0%</strong>
           </div>
 
-          <div class="stat">
-            <span class="stat-icon" aria-hidden="true">◌</span>
-            <span class="stat-label">HUMEDAD</span>
-            <strong id="humidity">--%</strong>
+          <div class="chip">
+            <span class="chip-label">Humedad</span>
+            <strong id="humidity">80%</strong>
           </div>
 
-          <div class="stat">
-            <span class="stat-icon" aria-hidden="true">⌁</span>
-            <span class="stat-label">VIENTO</span>
-            <strong id="wind">-- km/h</strong>
+          <div class="chip">
+            <span class="chip-label">Viento</span>
+            <strong id="wind">20 km/h</strong>
           </div>
         </div>
 
         <p class="weather-error" id="weatherError" hidden>
-          No pude actualizar el clima. Mostrando la fecha con normalidad.
+          No pude cargar el clima ahora mismo.
         </p>
       </section>
     </article>
